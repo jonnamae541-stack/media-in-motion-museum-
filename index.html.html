@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="A Grade 12 digital museum exploring media and information in everyday life.">
+<title>Media in Motion | A Digital Museum</title>
+<style>
+:root{
+  --navy:#14283f;--blue:#244b68;--teal:#3f7778;--gold:#c49a58;
+  --paper:#f5f3ee;--white:#fff;--ink:#263443;--muted:#65717b;
+  --line:#d9dedf;--pale:#e9efed;--shadow:0 14px 40px rgba(20,40,63,.09);
+}
+*{box-sizing:border-box;scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:Arial,Helvetica,sans-serif;line-height:1.65}
+a{color:inherit}
+.topbar{position:sticky;top:0;z-index:20;background:rgba(20,40,63,.97);color:white;display:flex;justify-content:space-between;align-items:center;padding:14px clamp(18px,5vw,72px);gap:20px}
+.brand{font-family:Georgia,serif;font-weight:bold;letter-spacing:.08em;font-size:.95rem}
+nav{display:flex;gap:19px;flex-wrap:wrap}
+nav a{text-decoration:none;color:#e6ecef;font-size:.82rem}
+nav a:hover{color:#e3c28d}
+.hero{background:linear-gradient(120deg,rgba(12,31,50,.97),rgba(36,75,104,.91)),radial-gradient(circle at 85% 20%,#628b83,transparent 35%);color:white;padding:90px clamp(22px,9vw,130px) 82px;position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;width:330px;height:330px;border:1px solid rgba(255,255,255,.18);border-radius:50%;right:-70px;bottom:-180px;box-shadow:0 0 0 35px rgba(255,255,255,.035),0 0 0 75px rgba(255,255,255,.025)}
+.eyebrow{text-transform:uppercase;letter-spacing:.2em;color:#e3c28d;font-size:.76rem;font-weight:bold}
+h1,h2,h3{font-family:Georgia,'Times New Roman',serif;line-height:1.18}
+h1{font-size:clamp(2.8rem,7vw,5.7rem);max-width:850px;margin:18px 0}
+.hero p{max-width:700px;color:#e0e8ed;font-size:1.08rem}
+.hero .sub{font-size:.88rem;color:#c5d1d9;margin-top:32px}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+.btn{display:inline-block;border:0;border-radius:4px;padding:12px 19px;background:var(--gold);color:#172b3e;text-decoration:none;font-weight:bold;cursor:pointer}
+.btn.secondary{background:transparent;color:white;border:1px solid #aab9c2}
+main{max-width:1180px;margin:auto;padding:0 25px}
+.section{padding:76px 0;border-bottom:1px solid var(--line)}
+.section-head{display:grid;grid-template-columns:130px 1fr;gap:22px;margin-bottom:32px}
+.section-no{color:var(--teal);font-size:.78rem;font-weight:bold;letter-spacing:.13em;padding-top:8px}
+h2{font-size:clamp(2rem,4vw,3rem);color:var(--navy);margin:0 0 12px}
+.lead{max-width:760px;color:var(--muted);margin:0}
+.intro-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:24px}
+.panel{background:white;border:1px solid var(--line);border-radius:9px;padding:27px;box-shadow:var(--shadow)}
+.panel.dark{background:var(--navy);color:white;border:0}
+.panel.dark p{color:#d6e0e6}
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px}
+.stat{background:var(--pale);padding:15px;border-radius:6px}
+.stat strong{display:block;font: bold 1.7rem Georgia;color:var(--navy)}
+.stat span{font-size:.8rem;color:var(--muted)}
+.gallery-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.gallery{background:white;border:1px solid var(--line);border-radius:8px;padding:25px;box-shadow:var(--shadow);display:flex;flex-direction:column}
+.gallery-top{display:flex;justify-content:space-between;align-items:center}
+.symbol{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:var(--pale);font-size:1.35rem}
+.tag{font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:var(--teal);font-weight:bold}
+.gallery h3{font-size:1.55rem;color:var(--navy);margin:15px 0 8px}
+.gallery p{margin:0 0 14px;color:var(--muted)}
+.gallery ul{padding-left:19px;margin:4px 0 16px}
+.procon{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:auto}
+.pro,.con{padding:13px;border-radius:6px;font-size:.88rem}
+.pro{background:#eaf2ee}.con{background:#f4eee7}
+.pro b,.con b{display:block;margin-bottom:4px;color:var(--navy)}
+.note{font-size:.82rem;color:var(--muted);margin-top:18px}
+.compare{width:100%;border-collapse:collapse;background:white;border-radius:8px;overflow:hidden;box-shadow:var(--shadow)}
+.compare th,.compare td{text-align:left;padding:15px;border-bottom:1px solid var(--line);vertical-align:top}
+.compare th{background:var(--navy);color:white;font-size:.85rem}
+.compare td{font-size:.9rem}
+.compare tr:last-child td{border-bottom:0}
+.scenario{background:linear-gradient(120deg,#e8efec,#f7f5ef);border-left:5px solid var(--teal);padding:28px;border-radius:7px}
+.scenario-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-top:20px}
+.scenario-card{background:white;padding:18px;border-radius:6px;border:1px solid var(--line)}
+.scenario-card h3{font-size:1.1rem;color:var(--navy);margin:0 0 8px}
+.steps{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.step{background:white;border-top:4px solid var(--teal);padding:20px 16px;border-radius:5px;box-shadow:var(--shadow)}
+.step .letter{font: bold 2rem Georgia;color:var(--gold)}
+.step h3{font-size:1.05rem;color:var(--navy);margin:5px 0}
+.step p{font-size:.88rem;color:var(--muted);margin:0}
+.quiz{background:var(--navy);color:white;padding:30px;border-radius:9px}
+.quiz h3{font-size:1.6rem;margin-top:0}
+.question{padding:17px 0;border-top:1px solid #496075}
+.question p{font-weight:bold;margin:0 0 10px}
+.question label{display:block;margin:7px 0;color:#e2e9ed;cursor:pointer}
+.question input{margin-right:8px;accent-color:#d5ad70}
+#quizResult{margin-top:18px;color:#f0cf94;font-weight:bold}
+.reflection{display:grid;grid-template-columns:.8fr 1.2fr;gap:22px}
+.reflection textarea,.reflection input{width:100%;padding:12px;border:1px solid var(--line);border-radius:5px;font:inherit;background:white}
+.reflection textarea{min-height:110px;resize:vertical}
+.field{margin-bottom:14px}
+.field label{display:block;font-size:.85rem;font-weight:bold;margin-bottom:6px;color:var(--navy)}
+footer{background:var(--navy);color:#dce5e9;padding:35px clamp(22px,8vw,100px);margin-top:30px}
+footer p{margin:6px 0;color:#bdcbd3;font-size:.85rem}
+footer a{color:#e3c28d}
+@media(max-width:760px){
+ nav{gap:10px}nav a{font-size:.74rem}.topbar{align-items:flex-start;flex-direction:column}
+ .section-head{grid-template-columns:1fr;gap:5px}.intro-grid,.gallery-grid,.reflection{grid-template-columns:1fr}
+ .scenario-grid{grid-template-columns:1fr}.steps{grid-template-columns:1fr 1fr}
+ .compare{font-size:.8rem}.compare th,.compare td{padding:9px}
+}
+@media(max-width:430px){.steps{grid-template-columns:1fr}.procon{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">THE MEDIA MUSEUM · GRADE 12</div>
+  <nav aria-label="Main navigation">
+    <a href="#about">Overview</a><a href="#galleries">Galleries</a><a href="#comparison">Compare</a><a href="#case">In Action</a><a href="#evaluate">Evaluate</a><a href="#reflection">Reflection</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="eyebrow">A digital exhibition · Media and Information Literacy</div>
+  <h1>Media in Motion:<br>Understanding the Messages Around Us</h1>
+  <p>Welcome to an interactive museum exploring how information is created, delivered, interpreted, and shared. Each gallery examines a different media form, its value, its limitations, and the responsibility that comes with using it.</p>
+  <div class="hero-actions">
+    <a class="btn" href="#galleries">Enter the galleries</a>
+    <a class="btn secondary" href="#evaluate">Explore the evaluation guide</a>
+  </div>
+  <div class="sub">An original Grade 12 performance task exhibit · Curated by: [Your Name / Group]</div>
+</section>
+
+<main>
+<section class="section" id="about">
+  <div class="section-head"><div class="section-no">01 / ORIENTATION</div><div><h2>Why does media matter?</h2><p class="lead">Media is more than a way to pass time. It is a system through which people learn about events, exchange ideas, express culture, and make decisions.</p></div></div>
+  <div class="intro-grid">
+    <div class="panel">
+      <h3>What is media and information literacy?</h3>
+      <p>Media and Information Literacy (MIL) is the ability to find, access, understand, evaluate, use, and create information responsibly. It encourages people to ask who produced a message, what evidence supports it, why it was shared, and how it may affect an audience.</p>
+      <p>A media-literate person does not automatically believe or reject a message. Instead, they examine its source, context, purpose, and evidence before forming a judgment or sharing it.</p>
+    </div>
+    <div class="panel dark">
+      <div class="tag" style="color:#e3c28d">The museum's central idea</div>
+      <h3>Every medium has a message—and a limitation.</h3>
+      <p>No single form of media can serve every purpose perfectly. A printed guide may be useful for careful reading, while a live broadcast may be better for urgent updates. Choosing wisely means understanding what each medium can and cannot do.</p>
+    </div>
+  </div>
+  <div class="stat-row">
+    <div class="stat"><strong>01</strong><span>Understand the medium</span></div>
+    <div class="stat"><strong>02</strong><span>Examine the message</span></div>
+    <div class="stat"><strong>03</strong><span>Respond responsibly</span></div>
+  </div>
+</section>
+
+<section class="section" id="galleries">
+  <div class="section-head"><div class="section-no">02 / THE EXHIBITS</div><div><h2>Six galleries of media</h2><p class="lead">Explore the forms of media we encounter in school, at home, in public spaces, and online. Each exhibit includes examples, strengths, and weaknesses.</p></div></div>
+  <div class="gallery-grid">
+    <article class="gallery">
+      <div class="gallery-top"><span class="tag">Gallery 01 · Printed communication</span><span class="symbol">▤</span></div>
+      <h3>Print Media</h3>
+      <p>Print media communicates through physical materials containing written words, photographs, illustrations, and designed layouts.</p>
+      <ul><li>Newspapers and magazines</li><li>Books, textbooks, and journals</li><li>Brochures, leaflets, and posters</li></ul>
+      <div class="procon"><div class="pro"><b>Strengths</b>Can be read without an internet connection; easy to keep, annotate, and revisit; often provides space for detailed explanations.</div><div class="con"><b>Weaknesses</b>Updates cannot be made instantly; printing and distribution cost resources; outdated copies may continue circulating.</div></div>
+      <p class="note"><b>Best used when:</b> readers need a lasting reference, detailed explanation, or focused reading experience.</p>
+    </article>
+    <article class="gallery">
+      <div class="gallery-top"><span class="tag">Gallery 02 · Audio and video transmission</span><span class="symbol">◖</span></div>
+      <h3>Broadcast Media</h3>
+      <p>Broadcast media sends audio or audiovisual programs to large audiences through scheduled or live transmission.</p>
+      <ul><li>Radio news and public service announcements</li><li>Television news and educational programs</li><li>Live interviews and public broadcasts</li></ul>
+      <div class="procon"><div class="pro"><b>Strengths</b>Can reach many people at once; sound and visuals make events easier to follow; live reports can provide timely information.</div><div class="con"><b>Weaknesses</b>Audiences may have limited control over the schedule; airtime is limited; editing and presentation choices can influence how a story is understood.</div></div>
+      <p class="note"><b>Best used when:</b> information needs to reach a broad audience through spoken explanations, visuals, or live coverage.</p>
+    </article>
+    <article class="gallery">
+      <div class="gallery-top"><span class="tag">Gallery 03 · Connected information</span><span class="symbol">⌘</span></div>
+      <h3>Digital Media</h3>
+      <p>Digital media is information created, stored, accessed, or distributed using electronic devices and digital systems.</p>
+      <ul><li>Websites and online articles</li><li>E-books and digital learning modules</li><li>Email, online databases, and presentations</li></ul>
+      <div class="procon"><div class="pro"><b>Strengths</b>Information can be searched and updated quickly; files are easy to store and share; links can connect readers to additional sources.</div><div class="con"><b>Weaknesses</b>Access may depend on devices, electricity, and connectivity; online content can contain errors; privacy and security need attention.</div></div>
+      <p class="note"><b>Best used when:</b> users need searchable resources, convenient storage, collaboration, or frequently updated material.</p>
+    </article>
+    <article class="gallery">
+      <div class="gallery-top"><span class="tag">Gallery 04 · Participatory platforms</span><span class="symbol">◎</span></div>
+      <h3>New Media</h3>
+      <p>New media uses networked digital platforms where audiences can interact, respond, publish, and take part in conversations.</p>
+      <ul><li>Social networking platforms</li><li>Blogs, podcasts, and discussion forums</li><li>Livestreams and user-created content</li></ul>
+      <div class="procon"><div class="pro"><b>Strengths</b>Allows two-way communication; gives individuals and communities a place to share perspectives; can build networks and support collaboration.</div><div class="con"><b>Weaknesses</b>Unverified claims can spread widely; comment sections may become disrespectful; algorithms and popularity can affect what users see.</div></div>
+      <p class="note"><b>Best used when:</b> participation, community discussion, feedback, and sharing different perspectives are important.</p>
+    </article>
+    <article class="gallery">
+      <div class="gallery-top"><span class="tag">Gallery 05 · Moving-image storytelling</span><span class="symbol">▶</span></div>
+      <h3>Film and Video Media</h3>
+      <p>Film and video combine moving images, sound, narration, and editing to tell stories or explain subjects.</p>
+      <ul><li>Documentaries and short films</li><li>Educational and instructional videos</li><li>News features and recorded interviews</li></ul>
+      <div class="procon"><div class="pro"><b>Strengths</b>Can demonstrate processes visually; combines sound and images to hold attention; can communicate emotion and complex ideas clearly.</div><div class="con"><b>Weaknesses</b>Production can require time and equipment; editing may leave out important context; viewers may need a suitable device and enough data or connectivity.</div></div>
+      <p class="note"><b>Best used when:</b> a process, event, personal account, or visual example is easier to understand by watching.</p>
+    </article>
+    <article class="gallery">
+      <div class="gallery-top"><span class="tag">Gallery 06 · Public-space communication</span><span class="symbol">▥</span></div>
+      <h3>Outdoor Media</h3>
+      <p>Outdoor media displays messages in shared physical spaces where people encounter them during everyday activities.</p>
+      <ul><li>Billboards and transit advertisements</li><li>Community notices and public posters</li><li>Wayfinding signs and information displays</li></ul>
+      <div class="procon"><div class="pro"><b>Strengths</b>Visible to people in public areas; can communicate a short message quickly; does not require an individual device or internet connection.</div><div class="con"><b>Weaknesses</b>Space for detail is limited; viewers may only see it briefly; placement, weather, and visibility can affect how well it works.</div></div>
+      <p class="note"><b>Best used when:</b> a short reminder, public announcement, direction, or awareness message needs broad local visibility.</p>
+    </article>
+  </div>
+</section>
+
+<section class="section" id="comparison">
+  <div class="section-head"><div class="section-no">03 / SIDE-BY-SIDE</div><div><h2>Choosing the right medium</h2><p class="lead">The most suitable medium depends on the audience, purpose, urgency, available resources, and level of detail required.</p></div></div>
+  <div style="overflow-x:auto">
+  <table class="compare">
+    <thead><tr><th>Media form</th><th>Useful for</th><th>What to watch out for</th></tr></thead>
+    <tbody>
+      <tr><td><b>Print</b></td><td>Long explanations and permanent references</td><td>Publication date and whether newer information exists</td></tr>
+      <tr><td><b>Broadcast</b></td><td>Wide-reach announcements and live reporting</td><td>Source credibility, editing, and missing context</td></tr>
+      <tr><td><b>Digital</b></td><td>Research, storage, and fast updates</td><td>Website reliability, privacy, and inaccurate content</td></tr>
+      <tr><td><b>New media</b></td><td>Discussion, participation, and community updates</td><td>Unverified posts, harmful comments, and viral rumors</td></tr>
+      <tr><td><b>Film / Video</b></td><td>Demonstrations, visual storytelling, and tutorials</td><td>Editing choices, missing context, and production quality</td></tr>
+      <tr><td><b>Outdoor</b></td><td>Local reminders, directions, and public awareness</td><td>Readability, visibility, and limited explanation space</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="note">A medium is not automatically reliable just because it is familiar or professionally presented. Always evaluate the actual message and its source.</p>
+</section>
+
+<section class="section" id="case">
+  <div class="section-head"><div class="section-no">04 / REAL-LIFE APPLICATION</div><div><h2>One community announcement, six ways</h2><p class="lead">Imagine a school is organizing a community clean-up drive. How could different media forms help inform students, parents, and residents?</p></div></div>
+  <div class="scenario">
+    <div class="tag">Exhibit scenario</div>
+    <h3 style="font-size:1.7rem;color:var(--navy);margin:8px 0">A neighborhood clean-up is happening this Saturday.</h3>
+    <p>The announcement needs to explain the date, meeting place, purpose, and what participants should expect. Each medium can contribute in a different way.</p>
+    <div class="scenario-grid">
+      <div class="scenario-card"><h3>Print</h3><p>Flyers can be posted on school bulletin boards and distributed to nearby households with the event details.</p></div>
+      <div class="scenario-card"><h3>Broadcast</h3><p>A school radio segment or local announcement can remind a large audience about the schedule.</p></div>
+      <div class="scenario-card"><h3>Digital</h3><p>The school website can provide the full program, contact details, and updates if arrangements change.</p></div>
+      <div class="scenario-card"><h3>New media</h3><p>An official school social account can invite questions, share reminders, and encourage community participation.</p></div>
+      <div class="scenario-card"><h3>Film / Video</h3><p>A short video can show the purpose of the activity and introduce the planned community project.</p></div>
+      <div class="scenario-card"><h3>Outdoor</h3><p>A clear poster near the community center can remind passersby of the event location and time.</p></div>
+    </div>
+  </div>
+  <p class="note"><b>Key insight:</b> Repeating consistent information across suitable channels can help reach different audiences. The organizer should keep the date, venue, and instructions accurate in every version.</p>
+</section>
+
+<section class="section" id="evaluate">
+  <div class="section-head"><div class="section-no">05 / CRITICAL THINKING</div><div><h2>Use the CLEAR check before you believe or share</h2><p class="lead">A practical five-step guide for examining information. Do not judge a post by its appearance or number of reactions alone.</p></div></div>
+  <div class="steps">
+    <div class="step"><div class="letter">C</div><h3>Check the creator</h3><p>Who made the message? Is the author or organization identifiable and qualified to discuss the topic?</p></div>
+    <div class="step"><div class="letter">L</div><h3>Look for evidence</h3><p>Are there facts, documents, links, or credible sources supporting the claims?</p></div>
+    <div class="step"><div class="letter">E</div><h3>Examine the date</h3><p>Is the information current? Could an old post or image be presented as a new event?</p></div>
+    <div class="step"><div class="letter">A</div><h3>Assess the purpose</h3><p>Is the message meant to inform, persuade, entertain, sell, or provoke a reaction?</p></div>
+    <div class="step"><div class="letter">R</div><h3>Review other sources</h3><p>Can independent, trustworthy sources confirm the same important details?</p></div>
+  </div>
+  <p class="note">If important details cannot be confirmed, pause before sharing. For urgent public announcements, check the relevant official organization or local government source.</p>
+</section>
+
+<section class="section" id="quiz">
+  <div class="section-head"><div class="section-no">06 / VISITOR CHALLENGE</div><div><h2>Test your media awareness</h2><p class="lead">Choose the best answer for each situation, then check your score.</p></div></div>
+  <div class="quiz">
+    <h3>Gallery knowledge check</h3>
+    <form id="quizForm">
+      <div class="question"><p>1. You need a detailed reference that can be read without internet access. Which medium may be most suitable?</p>
+        <label><input type="radio" name="q1" value="a"> A printed book or guide</label>
+        <label><input type="radio" name="q1" value="b"> A livestream</label>
+        <label><input type="radio" name="q1" value="c"> A short online comment</label></div>
+      <div class="question"><p>2. A post is being shared widely, but it has no author or supporting evidence. What should you do?</p>
+        <label><input type="radio" name="q2" value="a"> Share it quickly</label>
+        <label><input type="radio" name="q2" value="b"> Check its source and compare credible references</label>
+        <label><input type="radio" name="q2" value="c"> Assume it is true because it is popular</label></div>
+      <div class="question"><p>3. What is one important limitation of outdoor media?</p>
+        <label><input type="radio" name="q3" value="a"> It can never reach people without phones</label>
+        <label><input type="radio" name="q3" value="b"> It cannot use pictures</label>
+        <label><input type="radio" name="q3" value="c"> It usually has limited space for detailed explanations</label></div>
+      <div class="question"><p>4. Why should viewers consider how a video was edited?</p>
+        <label><input type="radio" name="q4" value="a"> Editing choices can affect context and interpretation</label>
+        <label><input type="radio" name="q4" value="b"> Every edited video is false</label>
+        <label><input type="radio" name="q4" value="c"> Videos do not communicate information</label></div>
+      <button class="btn" type="submit">Check my answers</button>
+      <div id="quizResult" role="status" aria-live="polite"></div>
+    </form>
+  </div>
+</section>
+
+<section class="section" id="reflection">
+  <div class="section-head"><div class="section-no">07 / CURATOR'S JOURNAL</div><div><h2>Reflect on what you discovered</h2><p class="lead">A meaningful exhibit connects classroom learning with personal experience. Use the prompts to record your own insights.</p></div></div>
+  <div class="reflection">
+    <div class="panel">
+      <h3>Questions to consider</h3>
+      <ol>
+        <li>Which media form do you use most often, and why?</li>
+        <li>What strength and weakness of that medium have you personally noticed?</li>
+        <li>How can the CLEAR check help you avoid sharing misleading information?</li>
+        <li>What responsibility do students have when creating or sharing content?</li>
+      </ol>
+    </div>
+    <form class="panel" id="reflectionForm">
+      <div class="field"><label for="studentName">Curator / Student name</label><input id="studentName" placeholder="Enter your name"></div>
+      <div class="field"><label for="reflectionText">My reflection</label><textarea id="reflectionText" placeholder="Write your own thoughts and examples here..." required></textarea></div>
+      <button class="btn" type="submit">Download my reflection</button>
+      <p class="note">Your reflection is prepared as a text file on your device. Review it before submitting.</p>
+    </form>
+  </div>
+</section>
+
+<section class="section" id="closing">
+  <div class="section-head"><div class="section-no">08 / FINAL THOUGHT</div><div><h2>Leave the museum as a mindful media user.</h2><p class="lead">Media gives people opportunities to learn, connect, and participate. Its value depends not only on the technology, but also on the choices of the people who create and consume it.</p></div></div>
+  <div class="panel dark"><h3 style="font-size:1.7rem">Think beyond the headline.</h3><p>Ask questions. Check evidence. Respect other people. Protect personal information. Give credit to original creators. Before passing information along, consider whether it is accurate, useful, and fair to the people who may be affected.</p></div>
+</section>
+
+<section class="section" id="references">
+  <div class="section-head"><div class="section-no">09 / FURTHER READING</div><div><h2>References and learning resources</h2><p class="lead">Use credible organizations and original sources when studying media literacy. Check the specific page you consult and format citations according to your teacher's required style.</p></div></div>
+  <div class="panel">
+    <ul>
+      <li><a href="https://www.unesco.org/en/media-information-literacy" target="_blank" rel="noopener">UNESCO — Media and Information Literacy</a></li>
+      <li><a href="https://www.ifla.org/publications/how-to-spot-fake-news/" target="_blank" rel="noopener">International Federation of Library Associations — How to Spot Fake News</a></li>
+      <li><a href="https://www.pia.gov.ph/" target="_blank" rel="noopener">Philippine Information Agency</a></li>
+      <li><a href="https://www.officialgazette.gov.ph/" target="_blank" rel="noopener">Official Gazette of the Republic of the Philippines</a></li>
+    </ul>
+    <p class="note">Add citations for any images, videos, statistics, quotations, or other materials you personally include. Replace this note with the exact sources used in your final project.</p>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="brand">MEDIA IN MOTION · A DIGITAL MUSEUM</div>
+  <p>Grade 12 Media and Information Literacy Performance Task</p>
+  <p>Prepared by: [Your Name / Group] · [Section] · [School Year]</p>
+  <p>Educational exhibit created to encourage critical, creative, and responsible media use.</p>
+  <p><a href="#top" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">Back to the beginning ↑</a></p>
+</footer>
+
+<script>
+document.getElementById('quizForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  const answers={q1:'a',q2:'b',q3:'c',q4:'a'};
+  let score=0;
+  for(const [q,a] of Object.entries(answers)){
+    const selected=this.querySelector('input[name="'+q+'"]:checked');
+    if(selected && selected.value===a) score++;
+  }
+  const result=document.getElementById('quizResult');
+  result.textContent='You got '+score+' out of 4 correct. '+(score===4?'Excellent work! You are thinking critically.':'Review the galleries and try again—you can do it!');
+});
+document.getElementById('reflectionForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  const name=document.getElementById('studentName').value.trim()||'Student';
+  const reflection=document.getElementById('reflectionText').value.trim();
+  if(!reflection){document.getElementById('reflectionText').focus();return;}
+  const content='MEDIA IN MOTION — CURATOR REFLECTION\n\nName: '+name+'\n\n'+reflection+'\n';
+  const blob=new Blob([content],{type:'text/plain;charset=utf-8'});
+  const url=URL.createObjectURL(blob);
+  const link=document.createElement('a');
+  link.href=url;link.download='media-in-motion-reflection.txt';
+  document.body.appendChild(link);link.click();link.remove();URL.revokeObjectURL(url);
+});
+</script>
+</body>
+</html>
